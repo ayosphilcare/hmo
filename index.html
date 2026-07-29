@@ -267,16 +267,20 @@
   .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;margin-top:10px;}
   .how-step{padding:0 22px;text-align:center;position:relative;}
   .how-num{
+    position:relative;z-index:2;
     height:56px;width:56px;border-radius:16px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;
     background:#fff;border:2px solid var(--border);color:var(--blue-deep);
   }
   .how-step.active .how-num{background:linear-gradient(135deg,var(--blue-deep),var(--green-vital));border-color:transparent;color:#fff;}
   .how-step h3{font-size:16.5px;font-weight:700;margin-bottom:8px;}
   .how-step p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0;}
-  .how-line{grid-column:1/-1;margin-top:-46px;padding:0 90px 30px;}
+  .how-step:not(:last-child)::after{
+    content:"";position:absolute;z-index:1;top:28px;left:50%;width:100%;height:0;
+    border-top:2.5px dashed var(--green-vital);opacity:.8;
+  }
   @media (max-width:860px){
     .how-steps{grid-template-columns:1fr;gap:34px;}
-    .how-line{display:none;}
+    .how-step:not(:last-child)::after{display:none;}
   }
 
   /* ---------- FAQ ---------- */
@@ -304,6 +308,31 @@
   .contact-row .t{font-size:13.5px;font-weight:700;}
   .contact-row .s{font-size:12.5px;color:var(--muted);}
   .contact-privacy{font-size:12px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);padding-top:16px;}
+  .qr-card{
+    display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);
+    padding:16px;margin-bottom:18px;box-shadow:var(--shadow-sm);
+  }
+  .qr-code-box{
+    height:88px;width:88px;border-radius:12px;background:var(--cloud);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;
+  }
+  .qr-code-box img{display:block;width:100%;height:100%;object-fit:contain;}
+  .qr-text .t{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+  .qr-text .s{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:6px;}
+  .qr-link{font-size:12.5px;font-weight:700;color:var(--green-vital);text-decoration:none;}
+  .qr-link:hover{text-decoration:underline;}
+  .appt-form{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 18px 16px;margin-bottom:22px;box-shadow:var(--shadow-sm);}
+  .appt-form-label{font-size:12.5px;font-weight:700;color:var(--ink);margin:0 0 12px;}
+  .appt-form-row{display:flex;gap:10px;margin-bottom:10px;}
+  .appt-input{
+    flex:1;min-width:0;border:2px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;
+    font-family:'Inter',sans-serif;outline:none;color:var(--ink);transition:border-color .15s ease;
+  }
+  .appt-input:focus{border-color:var(--green-vital);}
+  .appt-input::placeholder{color:#A9BAC7;}
+  .appt-form .btn{width:100%;margin-top:2px;}
+  .appt-form-note{font-size:11.5px;color:var(--muted);margin:9px 0 0;text-align:center;min-height:14px;}
+  @media (max-width:420px){.appt-form-row{flex-direction:column;}}
   .contact-card{
     background:linear-gradient(160deg,var(--blue-deep),var(--green-vital));border-radius:28px;padding:38px 32px;
     color:#fff;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
@@ -317,6 +346,62 @@
   @media (max-width:860px){.contact-grid{grid-template-columns:1fr;}}
 
   /* ---------- Footer ---------- */
+  /* ---------- Trust logo strip ---------- */
+  .trust-strip{padding:28px 0;border-bottom:1px solid var(--border);}
+  .trust-strip .shell{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap;}
+  .trust-strip .ts-label{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:6px;}
+  .trust-strip img{height:34px;width:auto;opacity:.85;filter:grayscale(15%);}
+  @media (max-width:640px){.trust-strip .shell{gap:26px;}.trust-strip img{height:26px;}}
+
+  /* ---------- Poster gallery ---------- */
+  .gallery{padding:70px 0;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .gallery-item{
+    position:relative;border-radius:16px;overflow:hidden;cursor:pointer;background:#fff;
+    border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease;
+    aspect-ratio:4/5;
+  }
+  .gallery-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+  .gallery-item .gi-overlay{
+    position:absolute;inset:0;background:linear-gradient(0deg, rgba(11,40,58,.86) 0%, rgba(11,40,58,0) 55%);
+    display:flex;align-items:flex-end;padding:14px;opacity:0;transition:opacity .2s ease;
+  }
+  .gallery-item:hover .gi-overlay{opacity:1;}
+  .gallery-item .gi-title{color:#fff;font-size:12.5px;font-weight:700;line-height:1.35;}
+  .gallery-item .gi-zoom{
+    position:absolute;top:10px;right:10px;height:30px;width:30px;border-radius:999px;background:rgba(255,255,255,.92);
+    color:var(--blue-deep);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s ease;
+  }
+  .gallery-item:hover .gi-zoom{opacity:1;}
+  @media (max-width:940px){.gallery-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:640px){.gallery-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
+
+  /* ---------- Lightbox ---------- */
+  .lightbox-overlay{
+    position:fixed;inset:0;background:rgba(8,20,28,.92);z-index:110;display:none;
+    align-items:center;justify-content:center;padding:24px;
+  }
+  .lightbox-overlay.open{display:flex;animation:fadeIn .2s ease both;}
+  .lightbox-inner{position:relative;max-width:640px;width:100%;max-height:90vh;display:flex;flex-direction:column;align-items:center;}
+  .lightbox-inner img{max-width:100%;max-height:76vh;border-radius:14px;box-shadow:0 30px 70px -20px rgba(0,0,0,.6);object-fit:contain;}
+  .lightbox-caption{color:#fff;font-size:14px;font-weight:600;margin-top:14px;text-align:center;}
+  .lightbox-close{
+    position:absolute;top:-16px;right:-16px;height:38px;width:38px;border-radius:999px;background:#fff;color:var(--ink);
+    border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);z-index:2;
+  }
+  .lightbox-nav{
+    position:absolute;top:50%;transform:translateY(-50%);height:44px;width:44px;border-radius:999px;background:rgba(255,255,255,.15);
+    border:none;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .15s ease;
+  }
+  .lightbox-nav:hover{background:rgba(255,255,255,.3);}
+  .lightbox-prev{left:-56px;}
+  .lightbox-next{right:-56px;}
+  @media (max-width:760px){
+    .lightbox-prev{left:4px;}
+    .lightbox-next{right:4px;}
+  }
+
   .foot{padding:44px 0 26px;border-top:1px solid var(--border);}
   .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:30px;}
   .foot-brand .nav-logo{margin-bottom:10px;}
@@ -427,6 +512,14 @@
 </style>
 </head>
 <body>
+<script>
+  /* ---- SHARED SITE CONFIG — edit once, used by both the assessment widget and the appointment form ---- */
+  window.AYOS_CONFIG = {
+    GOOGLE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwasAqDUG4Or1z8kAq6HUMJRVCHnsTaAUBSCYxiJybArPTi_qKnuE72KLcNQWa1pUI/exec", // ends in /exec
+    WHATSAPP_NUMBER: "639453090054", // 63 + number, no leading 0, no +
+    MESSENGER_USERNAME: "yourpageusername", // m.me/<this>
+  };
+</script>
 
 <!-- ============================================================
      NAV
@@ -476,8 +569,8 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
           Licensed HMO Specialist
         </span>
-        <h1>Protect your family before a medical bill turns into a <em>financial emergency</em>.</h1>
-        <p class="lede">Answer 7 quick questions and get a personalized recommendation between AYOS Health Card and PhilCare — matched to your age, household, and budget, from a licensed advisor. No cost, no pressure.</p>
+        <h1>In just one emergency admission, <em>your savings will be gone.</em></h1>
+        <p class="lede">A single hospital confinement can cost more than a year of income — and it rarely gives you warning. Answer 7 quick questions and get a personalized recommendation between AYOS Health Card and PhilCare before you need it, not after.</p>
         <div class="hero-ctas">
           <button class="btn btn-primary btn-open-assessment">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
@@ -631,11 +724,6 @@
           <h3>Enjoy Healthcare Protection</h3>
           <p>Talk to your licensed advisor to finalize enrollment and get covered — often within days.</p>
         </div>
-        <div class="how-line reveal">
-          <svg viewBox="0 0 1000 40" preserveAspectRatio="none" width="100%" height="40">
-            <polyline class="pulse-line" points="0,20 300,20 330,4 355,36 380,20 1000,20" fill="none" stroke="var(--green-vital)" stroke-width="2" stroke-dasharray="6 7"/>
-          </svg>
-        </div>
       </div>
     </div>
   </section>
@@ -679,6 +767,24 @@
             <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
             <div><div class="t">Mon–Sat, 9:00 AM – 7:00 PM</div><div class="s">Philippine Standard Time</div></div>
           </div>
+        </div>
+        <div class="qr-card reveal">
+          <div class="qr-code-box" id="apptQR"></div>
+          <div class="qr-text">
+            <div class="t">Scan to book an appointment</div>
+            <div class="s">Opens a WhatsApp chat with an advisor to set a schedule</div>
+            <a class="qr-link" href="#" id="apptQRLink" target="_blank" rel="noreferrer">Or tap here on mobile</a>
+          </div>
+        </div>
+        <div class="appt-form reveal" id="apptForm">
+          <p class="appt-form-label">Or request a callback for a specific time — we'll log it and confirm with you</p>
+          <div class="appt-form-row">
+            <input type="text" id="apptName" class="appt-input" placeholder="Full name" />
+            <input type="tel" id="apptContact" class="appt-input" placeholder="Mobile number" />
+          </div>
+          <input type="text" id="apptWhen" class="appt-input" placeholder="Preferred date/time (e.g. Aug 5, 2 PM)" style="width:100%;margin-bottom:12px;" />
+          <button class="btn btn-primary btn-sm" id="apptSubmitBtn">Request This Time</button>
+          <p class="appt-form-note" id="apptFormNote"></p>
         </div>
         <p class="contact-privacy">Your information is kept confidential and used only to follow up on your inquiry — never shared with third parties without consent.</p>
       </div>
@@ -916,6 +1022,51 @@
     });
   });
 
+  /* ---- Appointment QR code + callback request form ---- */
+  const waBookingMsg = encodeURIComponent("Hi! I'd like to schedule an appointment with an advisor.");
+  const bookingUrl = `https://wa.me/${window.AYOS_CONFIG.WHATSAPP_NUMBER}?text=${waBookingMsg}`;
+  const apptQRBox = document.getElementById("apptQR");
+  if (apptQRBox) apptQRBox.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(bookingUrl)}" alt="QR code that opens a WhatsApp chat to book an appointment" loading="lazy" />`;
+  const apptQRLink = document.getElementById("apptQRLink");
+  if (apptQRLink) apptQRLink.href = bookingUrl;
+
+  const apptSubmitBtn = document.getElementById("apptSubmitBtn");
+  if (apptSubmitBtn) {
+    apptSubmitBtn.addEventListener("click", async () => {
+      const nameEl = document.getElementById("apptName");
+      const contactEl = document.getElementById("apptContact");
+      const whenEl = document.getElementById("apptWhen");
+      const note = document.getElementById("apptFormNote");
+      const name = nameEl.value.trim(), contact = contactEl.value.trim(), when = whenEl.value.trim();
+      if (!name || !contact) {
+        note.textContent = "Please enter your name and mobile number.";
+        note.style.color = "#C0392B";
+        return;
+      }
+      apptSubmitBtn.disabled = true;
+      apptSubmitBtn.textContent = "Sending...";
+      note.textContent = "";
+      try {
+        if (window.AYOS_CONFIG.GOOGLE_SCRIPT_URL && !window.AYOS_CONFIG.GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) {
+          await fetch(window.AYOS_CONFIG.GOOGLE_SCRIPT_URL, {
+            method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ type: "Appointment Request", name, contact, schedule: when }),
+          });
+        }
+        note.textContent = "Request sent! An advisor will confirm your appointment shortly.";
+        note.style.color = "var(--green-vital)";
+        nameEl.value = ""; contactEl.value = ""; whenEl.value = "";
+      } catch (err) {
+        console.error("Appointment request failed", err);
+        note.textContent = "Something went wrong — please try WhatsApp instead.";
+        note.style.color = "#C0392B";
+      } finally {
+        apptSubmitBtn.disabled = false;
+        apptSubmitBtn.textContent = "Request This Time";
+      }
+    });
+  }
+
   /* ---- Assessment modal open/close ---- */
   const modal = document.getElementById("assessmentModal");
   const closeBtn = document.getElementById("modalCloseBtn");
@@ -928,7 +1079,7 @@
     modal.classList.remove("open");
     document.body.style.overflow = "";
   }
-  document.querySelectorAll(".btn-open-assessment").forEach(btn => btn.addEventListener("click", openModal));
+  document.addEventListener("click", (e) => { if (e.target.closest(".btn-open-assessment")) openModal(); });
   closeBtn.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
@@ -945,9 +1096,9 @@
 (function(){
 
   /* ---- CONFIG — edit these before publishing ---- */
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynUsdpzSVafvshmP7Gneg6yBsjofjpA9NDh9_tigt6Qft7FOtEHQqYbWBeqhL0Kn_5/exec"; // ends in /exec
-  const WHATSAPP_NUMBER = "639453090054"; // 63 + number, no leading 0, no +
-  const MESSENGER_USERNAME = "HealthReadyPH"; // m.me/<this>
+  const GOOGLE_SCRIPT_URL = window.AYOS_CONFIG.GOOGLE_SCRIPT_URL;
+  const WHATSAPP_NUMBER = window.AYOS_CONFIG.WHATSAPP_NUMBER;
+  const MESSENGER_USERNAME = window.AYOS_CONFIG.MESSENGER_USERNAME;
   const ADVISOR_NAME = "Marco Peñalosa";
   const ADVISOR_TITLE = "HMO Consultant";
 
@@ -1242,7 +1393,7 @@
     state.submitting = true;
     render();
     const payload = {
-      name: state.lead.name, contact: state.lead.contact, who: state.answers.who, age: state.answers.age,
+      type: "Assessment Lead", name: state.lead.name, contact: state.lead.contact, who: state.answers.who, age: state.answers.age,
       groupSize: state.answers.groupSize, budget: state.answers.budget, pec: state.answers.pec,
       hospital: state.answers.hospital, priority: state.answers.priority, brand: rec.badge,
       planName: rec.planName, price: rec.price,
